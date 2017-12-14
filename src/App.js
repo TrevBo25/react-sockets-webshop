@@ -14,6 +14,7 @@ class App extends Component {
       room: 1,
       joined: false,
       messagesList: [],
+      typers: [],
     }
     this.typing = false;
     this.lastTyping = 0;
@@ -26,12 +27,28 @@ class App extends Component {
   componentDidMount(){
     socket.emit('roomChange', this.state.room)
     socket.on('getMessage', messages => {
-      console.log(messages)
       this.setState({
         messagesList: messages
       })
-      console.log(this.state.messagesList)
     });
+    socket.on('newTyper', name => {
+        let newTypers = this.state.typers
+        newTypers.push(name)
+        this.setState({
+          typers: newTypers
+        })
+    });
+    socket.on('oldTyper', name => {
+      var newerTypers = this.state.typers;
+      newerTypers.forEach((e, i, a) => {
+        if(e === name){
+          a.splice(i,1)
+        }
+      })
+      this.setState({
+        typers: newerTypers
+      })
+    })
     
   }
 
@@ -58,20 +75,16 @@ class App extends Component {
 
   isTyping(){
     this.typing = true
-    console.log('typing')
     socket.emit('typing', this.state.name)
   }
 
   isNotTyping(){
     this.typing = false
-    console.log('nottyping')
     socket.emit('stopTyping', this.state.name)
   }
 
   updateTyping(){
-    console.log('hi')
     if(!this.typing){
-      console.log('hit')
       this.isTyping()
     }
     this.lastTyping = (new Date()).getTime();
@@ -79,16 +92,14 @@ class App extends Component {
     setTimeout(() => {
       var newTyping = (new Date()).getTime();
       var timeDiff = newTyping - this.lastTyping;
-      console.log(timeDiff)
-      if(timeDiff >= 2000 && this.typing){
+      if(timeDiff >= 500 && this.typing){
         this.isNotTyping()
       }
-    }, 2000)
+    }, 500)
   }
 
   render() {
     const messageList = this.state.messagesList.map((e,i) => {
-      console.log(e)
       if(e.room == this.state.room){
         return(
           <div key={i} className="messageholder">
@@ -103,13 +114,22 @@ class App extends Component {
       }
     })
 
+    const typersList = this.state.typers.map((e, i) => {
+      return(
+        <h5 className="typer" key={i}>{e} is typing...</h5>
+      )
+    })
+
     return(
       <div className="papa">
-          <select onChange={e => this.changeRoom(e.target.value)} className="dropdown">
-            <option value={1} className="dropdownelem">Room 1</option>
-            <option value={2} className="dropdownelem">Room 2</option>
-            <option value={3} className="dropdownelem">Room 3</option>
-          </select>
+        <div className="typersholder">
+          {typersList}
+        </div>
+        <select onChange={e => this.changeRoom(e.target.value)} className="dropdown">
+          <option value={1} className="dropdownelem">Room 1</option>
+          <option value={2} className="dropdownelem">Room 2</option>
+          <option value={3} className="dropdownelem">Room 3</option>
+        </select>
         <div className="chatholder">
           {messageList}
         </div>

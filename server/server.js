@@ -18,6 +18,7 @@ io.on('connection', onConnect)
 function onConnect(socket){
     socket.join('chat room')
     console.log('A user joined the chatroom')
+    
     socket.on('sendMessage', message => {
         // console.log('new message ', message);
         messages.push(message);
@@ -31,11 +32,13 @@ function onConnect(socket){
     })
 
     socket.on('typing', name => {
-        console.log(name)
+        // console.log(name)
+        socket.broadcast.emit('newTyper', name)
     })
 
     socket.on('stopTyping', name => {
-        console.log(name + ' stopped typing')
+        // console.log(name + ' stopped typing')
+        socket.broadcast.emit('oldTyper', name)
     })
 
     socket.on('disconnect', () => {

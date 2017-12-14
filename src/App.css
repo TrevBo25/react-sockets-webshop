@@ -62,3 +62,16 @@
   font-size: 15px;
   margin-left: 20px;
 }
+.typersholder{
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.typer{
+  margin: 5px;
+}
