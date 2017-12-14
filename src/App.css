@@ -1,28 +1,64 @@
-.App {
-  text-align: center;
+.papa{
+  min-height: 100vh;
+  width: 100%;
+  background-color: rgb(220, 220, 220);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.chatholder{
+  height: 93vh;
+  width: 60%;
+  margin-top: 2vh;
+  background-color: white;
+  position: relative;
+  overflow: auto;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.dropdown{
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
 }
-
-.App-title {
-  font-size: 1.5em;
+.dropdownelem{
+  
 }
-
-.App-intro {
-  font-size: large;
+.inputsholder{
+  position: absolute;
+  bottom: 0;
+  width: 60%;
+  display: flex;
+  justify-content: center;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.inputname{
+  font-size: 20px;
+  flex: 1;
+  height: 4.5vh;
+}
+.inputbody{
+  font-size: 15px;
+  flex: 9;
+}
+.button{
+  flex: 1;
+}
+.chatholder{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.messageholder{
+  width: 70%;
+  margin: 5px 0px 5px 10px;
+  background-color: rgb(220, 220, 220);
+  border-radius: 10px;
+}
+.messagename{
+  font-size: 17px;
+  margin-left: 10px;
+}
+.messagebody{
+  font-size: 15px;
+  margin-left: 20px;
 }
