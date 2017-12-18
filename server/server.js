@@ -1,7 +1,7 @@
 const express = require('express'),
       bodyParser = require('body-parser'),
       cors = require('cors'),
-      
+
       // A new dependency. socket.io integrates with the ExpressJS Server.
       socket = require('socket.io');
 
@@ -39,7 +39,6 @@ function onConnect(socket){
     // Gets the messages on connection
 
     socket.on('join', () => {
-        console.log('room')
         socket.emit('getMessage', messages)
     })
 
