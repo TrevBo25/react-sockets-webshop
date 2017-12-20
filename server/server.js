@@ -27,12 +27,12 @@ function onConnect(socket){
     
     // Everyone including the sender
 
-    // socket.on('sendMessage', message => {
-    //     // console.log('new message ', message);
-    //     messages.push(message);
-    //     // console.log('new array of messages', messages)
-    //     io.in('chat room').emit('getMessage', messages)
-    // })
+    socket.on('sendMessage', message => {
+        // console.log('new message ', message);
+        messages.push(message);
+        // console.log('new array of messages', messages)
+        io.in('chat room').emit('getMessage', messages)
+    })
 
     //
     
@@ -45,15 +45,15 @@ function onConnect(socket){
 
     // Everyone but the sender
 
-    // socket.on('typing', name => {
-    //     // console.log(name)
-    //     socket.broadcast.emit('newTyper', name)
-    // })
+    socket.on('typing', name => {
+        // console.log(name)
+        socket.broadcast.emit('newTyper', name)
+    })
 
-    // socket.on('stopTyping', name => {
-    //     // console.log(name + ' stopped typing')
-    //     socket.broadcast.emit('oldTyper', name)
-    // })
+    socket.on('stopTyping', name => {
+        // console.log(name + ' stopped typing')
+        socket.broadcast.emit('oldTyper', name)
+    })
 
     //
 

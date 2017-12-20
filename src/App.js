@@ -36,11 +36,11 @@ class App extends Component {
 
     // Everyone including the sender
 
-    // socket.on('getMessage', messages => {
-    //   this.setState({
-    //     messagesList: messages
-    //   })
-    // });
+    socket.on('getMessage', messages => {
+      this.setState({
+        messagesList: messages
+      })
+    });
 
     // 
 
@@ -50,25 +50,25 @@ class App extends Component {
 
     // Everyone but the sender
 
-    // socket.on('newTyper', name => {
-    //     let newTypers = this.state.typers
-    //     newTypers.push(name)
-    //     this.setState({
-    //       typers: newTypers
-    //     })
-    // });
+    socket.on('newTyper', name => {
+        let newTypers = this.state.typers
+        newTypers.push(name)
+        this.setState({
+          typers: newTypers
+        })
+    });
 
-    // socket.on('oldTyper', name => {
-    //   var newerTypers = this.state.typers;
-    //   newerTypers.forEach((e, i, a) => {
-    //     if(e === name){
-    //       a.splice(i,1)
-    //     }
-    //   })
-    //   this.setState({
-    //     typers: newerTypers
-    //   })
-    // });
+    socket.on('oldTyper', name => {
+      var newerTypers = this.state.typers;
+      newerTypers.forEach((e, i, a) => {
+        if(e === name){
+          a.splice(i,1)
+        }
+      })
+      this.setState({
+        typers: newerTypers
+      })
+    });
     
     //
 
@@ -78,14 +78,14 @@ class App extends Component {
 
     // Everyone including the sender
 
-    // socket.emit('sendMessage', {
-    //   name: this.state.name,
-    //   body: this.state.body,
-    //   room: this.state.room
-    // })
-    // this.setState({
-    //   body: ''
-    // })
+    socket.emit('sendMessage', {
+      name: this.state.name,
+      body: this.state.body,
+      room: this.state.room
+    })
+    this.setState({
+      body: ''
+    })
 
     //
 
@@ -99,12 +99,12 @@ class App extends Component {
 
   isTyping(){
     this.typing = true
-    // socket.emit('typing', this.state.name)
+    socket.emit('typing', this.state.name)
   }
 
   isNotTyping(){
     this.typing = false
-    // socket.emit('stopTyping', this.state.name)
+    socket.emit('stopTyping', this.state.name)
   }
 
   updateTyping(){
